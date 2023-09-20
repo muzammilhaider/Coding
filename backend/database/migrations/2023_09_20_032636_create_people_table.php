@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
-            $table->foreign('role_id');
+            $table->foreignId('role_id');
             $table->foreign('role_id')->references('id')->on('role');
-            $table->foreign('company_id');
+            $table->foreignId('company_id');
             $table->foreign('company_id')->references('id')->on('company');
             $table->string('name', 255);
             $table->string('email')->unique();

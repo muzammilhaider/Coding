@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\FileImport;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -41,6 +42,8 @@ class HomeController extends Controller
         $this->validate($request, [
             'select_file'  => 'required|mimes:xls,xlsx,csv'
         ]);
-        return $this->customerRequestService->importCRM($request);
+        $filePath = $request->file('select_file')->store('temp');
+        FileImport::dispatch($filePath);
+        return back()->with('success', 'Excel Data Imported successfully.');
     }
 }
